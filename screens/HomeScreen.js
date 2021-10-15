@@ -5,13 +5,12 @@ import Header from "../components/Home/Header";
 import Post from "../components/Home/Post";
 import Stories from "../components/Home/Stories";
 import { bottomTabIcons } from "../Data/Bottom_Tab_Icons";
-import { POSTS } from "../Data/posts";
 import { db } from "../firebase";
 
 const HomeScreen = ({navigation}) => {
   const [posts,setPosts] = useState([])
   useEffect(()=>{
-    db.collectionGroup('posts').orderBy('createdAt','desc').onSnapshot(snapshot => {
+    db.collectionGroup('posts').onSnapshot(snapshot => {
       setPosts(snapshot.docs.map(post=>({id:post.id,...post.data()})))
     })
   },[])

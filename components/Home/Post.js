@@ -41,7 +41,7 @@ const Post = ({ post }) => {
     db.collection("users")
       .doc(post.owner_email)
       .collection("posts")
-      .doc(post_id)
+      .doc(post.id)
       .update({
         likes_by_users: currentLikeStatus
           ? firebase.firestore.FieldValue.arrayUnion(
@@ -118,7 +118,7 @@ const PostFooter = ({ handleLike, post }) => (
   <View style={{ flexDirection: "row" }}>
     <View style={styles.leftFooterIconsContainer}>
       <TouchableOpacity onPress={()=>handleLike(post)}>
-    <Image style={styles.footerIcon} source={{uri:postFooterIcons[0].imageUrl}}/>
+    <Image style={styles.footerIcon} source={{uri:post.likes_by_users.includes(firebase.auth().currentUser.email ) ? postFooterIcons[0].likedImageUrl : postFooterIcons[0].imageUrl}}/>
     </TouchableOpacity>
       <Icon imgStyle={styles.footerIcon} imgUrl={postFooterIcons[1].imageUrl} />
       <Icon
